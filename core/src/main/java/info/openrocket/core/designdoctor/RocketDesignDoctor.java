@@ -86,7 +86,7 @@ public final class RocketDesignDoctor {
 		}
 		return new Report(configuration.getName(), configuration.getActiveStageCount(),
 				length, diameter, structure.getWeight(), centerOfGravity(structure), launchMass, launchCg,
-				cp, margin, margin / diameter, stability, hasAirframe, List.copyOf(findings));
+				cp, margin, margin / diameter, stability, hasAirframe, findings);
 	}
 
 	private static double centerOfGravity(CoordinateIF center) {
@@ -149,5 +149,8 @@ public final class RocketDesignDoctor {
 			double structureMass, double structureCg, double launchMass, double launchCg, double cp,
 			double margin, double marginCalibers, StaticStability stability, boolean airframeEvaluated,
 			List<Finding> findings) {
+		public Report {
+			findings = List.copyOf(findings);
+		}
 	}
 }
