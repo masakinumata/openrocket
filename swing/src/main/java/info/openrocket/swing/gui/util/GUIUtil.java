@@ -33,6 +33,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -169,12 +170,23 @@ public class GUIUtil {
 
 	/**
 	 * Creates an OpenRocket UI font from the stored style identifier.
-	 * Each preference value maps to a specific bundled Inter face so light, regular,
-	 * medium, and bold remain visually distinct on every platform.
+	 * Japanese uses a logical font with system glyph fallback. Other locales use the bundled Inter faces.
 	 */
 	public static Font createUIFont(String fontStyle, float fontSize, float letterSpacing) {
-		Font baseFont = getBaseUIFont(fontStyle);
+		Font baseFont;
 		Map<TextAttribute, Object> attributes = new HashMap<>();
+		if (Locale.JAPANESE.getLanguage().equals(Locale.getDefault().getLanguage())) {
+			// Dialog uses the JRE's system font fallback for kana and kanji.
+			baseFont = new Font(Font.DIALOG, Font.PLAIN, 1);
+			attributes.put(TextAttribute.WEIGHT, switch (normalizeUIFontStyle(fontStyle)) {
+				case UI_FONT_STYLE_LIGHT -> TextAttribute.WEIGHT_LIGHT;
+				case UI_FONT_STYLE_MEDIUM -> TextAttribute.WEIGHT_MEDIUM;
+				case UI_FONT_STYLE_BOLD -> TextAttribute.WEIGHT_BOLD;
+				default -> TextAttribute.WEIGHT_REGULAR;
+			});
+		} else {
+			baseFont = getBaseUIFont(fontStyle);
+		}
 		attributes.put(TextAttribute.SIZE, fontSize);
 		attributes.put(TextAttribute.TRACKING, letterSpacing);
 		return baseFont.deriveFont(attributes);
