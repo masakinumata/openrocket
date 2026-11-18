@@ -185,7 +185,7 @@ public final class MonteCarloSimulationRunner {
 				maximumAltitude, flightTime, failure);
 	}
 
-	private static void validateExtensions(Simulation simulation) {
+	static void validateExtensions(Simulation simulation) {
 		List<String> unsafeExtensionNames = new ArrayList<>();
 		for (SimulationExtension extension : simulation.getSimulationExtensions()) {
 			if (!extension.isMonteCarloSafe()) {
