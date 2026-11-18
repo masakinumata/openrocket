@@ -37,6 +37,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import com.formdev.flatlaf.util.FontUtils;
+
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
@@ -190,7 +192,11 @@ public class GUIUtil {
 		Font loadedFont = loadBundledFont(UI_FONT_PATHS.get(normalizedStyle));
 		if (loadedFont == null) {
 			loadedFont = new Font(UI_FONT_FAMILY, Font.PLAIN, 1);
+		} else {
+			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(loadedFont);
 		}
+		// Keep the selected Inter face and let Swing fill missing glyphs from system fonts.
+		loadedFont = FontUtils.getCompositeFont(loadedFont.getFontName(), Font.PLAIN, 1);
 		UI_FONT_CACHE.put(normalizedStyle, loadedFont);
 		return loadedFont;
 	}
