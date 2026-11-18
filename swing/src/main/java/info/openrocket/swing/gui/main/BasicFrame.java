@@ -116,6 +116,7 @@ import info.openrocket.swing.gui.dialogs.AboutDialog;
 import info.openrocket.swing.gui.dialogs.BugReportDialog;
 import info.openrocket.swing.gui.dialogs.componentanalysis.ComponentAnalysisDialog;
 import info.openrocket.swing.gui.dialogs.designdoctor.RocketDesignDoctorDialog;
+import info.openrocket.swing.gui.simulation.ManufacturingDialog;
 import info.openrocket.swing.gui.dialogs.DebugLogDialog;
 import info.openrocket.swing.gui.dialogs.DecalNotFoundDialog;
 import info.openrocket.swing.gui.dialogs.DetailDialog;
@@ -838,6 +839,10 @@ private static final Translator trans = Application.getTranslator();
 		item.getAccessibleContext().setAccessibleDescription(trans.get("RocketDesignDoctor.menuDescription"));
 		item.addActionListener(e -> new RocketDesignDoctorDialog(this, document.getSelectedConfiguration())
 				.setVisible(true));
+		toolsMenu.add(item);
+
+		item = new JMenuItem(trans.get("Manufacturing.title"));
+		item.addActionListener(e -> new ManufacturingDialog(this, document).setVisible(true));
 		toolsMenu.add(item);
 
 		////	Optimize
