@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.util.List;
 import java.util.Locale;
 
+import info.openrocket.core.l10n.ResourceBundleTranslator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.ResourceLock;
 import org.junit.jupiter.api.parallel.Resources;
@@ -15,7 +16,8 @@ class UIFontFallbackTest {
 	@Test
 	@ResourceLock(Resources.LOCALE)
 	void japaneseLabelsUseAvailableSystemGlyphsInEveryUiWeight() {
-		String labels = "ファイル 解析 設計診断 閉じる";
+		var japanese = new ResourceBundleTranslator("l10n.messages", Locale.JAPANESE);
+		String labels = japanese.get("RocketDesignDoctor.title") + " " + japanese.get("button.close");
 		Font systemFont = new Font(Font.DIALOG, Font.PLAIN, 13);
 		assumeTrue(systemFont.canDisplayUpTo(labels) == -1, "Japanese system glyphs required");
 
