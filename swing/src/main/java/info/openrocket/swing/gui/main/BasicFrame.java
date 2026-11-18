@@ -115,6 +115,7 @@ import info.openrocket.swing.gui.export.SvgOptionsDialog;
 import info.openrocket.swing.gui.dialogs.AboutDialog;
 import info.openrocket.swing.gui.dialogs.BugReportDialog;
 import info.openrocket.swing.gui.dialogs.componentanalysis.ComponentAnalysisDialog;
+import info.openrocket.swing.gui.dialogs.designdoctor.RocketDesignDoctorDialog;
 import info.openrocket.swing.gui.dialogs.DebugLogDialog;
 import info.openrocket.swing.gui.dialogs.DecalNotFoundDialog;
 import info.openrocket.swing.gui.dialogs.DetailDialog;
@@ -830,6 +831,13 @@ private static final Translator trans = Application.getTranslator();
 				ComponentAnalysisDialog.showDialog(document, rocketpanel);
 			}
 		});
+		toolsMenu.add(item);
+
+		////	Rocket Design Doctor
+		item = new JMenuItem(trans.get("RocketDesignDoctor.title"));
+		item.getAccessibleContext().setAccessibleDescription(trans.get("RocketDesignDoctor.menuDescription"));
+		item.addActionListener(e -> new RocketDesignDoctorDialog(this, document.getSelectedConfiguration())
+				.setVisible(true));
 		toolsMenu.add(item);
 
 		////	Optimize
