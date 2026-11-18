@@ -40,6 +40,7 @@ open module info.openrocket.core {
 	exports info.openrocket.core.componentanalysis;
 	exports info.openrocket.core.database;
 	exports info.openrocket.core.database.motor;
+	exports info.openrocket.core.designdoctor;
 	exports info.openrocket.core.document;
 	exports info.openrocket.core.document.attachments;
 	exports info.openrocket.core.document.events;
