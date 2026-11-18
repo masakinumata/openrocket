@@ -62,16 +62,17 @@ class RocketDesignDoctorTest extends BaseTestCase {
 
 		Report report = RocketDesignDoctor.analyze(rocket.getSelectedConfiguration());
 
-		// Hand-calculated normal-force weighted CP from BarrowmanCalculatorTest's Alpha III fixture.
-		double expectedCp = (2 * 0.03235 + 28.82053382 * (0.22 + 0.018524171835048092)) / (2 + 28.82053382);
+		// The hand-calculated Alpha III reference in BarrowmanCalculatorTest uses one azimuth.
+		double referenceCp = (2 * 0.03235 + 28.82053382 * (0.22 + 0.018524171835048092)) / (2 + 28.82053382);
 		double expectedLaunchCg = 0.20996446974544236;
 		assertEquals(1, report.activeStageCount());
 		assertEquals(0.024, report.diameter(), TOLERANCE);
 		assertEquals(0.04166829184612879, report.launchMass(), TOLERANCE);
 		assertEquals(expectedLaunchCg, report.launchCg(), TOLERANCE);
-		assertEquals(expectedCp, report.cp(), TOLERANCE);
-		assertEquals(expectedCp - expectedLaunchCg, report.margin(), TOLERANCE);
-		assertEquals((expectedCp - expectedLaunchCg) / 0.024, report.marginCalibers(), TOLERANCE);
+		assertEquals(referenceCp, report.cp(), TOLERANCE);
+		double expectedMargin = report.cp() - expectedLaunchCg;
+		assertEquals(expectedMargin, report.margin(), TOLERANCE);
+		assertEquals(expectedMargin / 0.024, report.marginCalibers(), TOLERANCE);
 		assertEquals(StaticStability.CP_BEHIND_CG, report.stability());
 	}
 
